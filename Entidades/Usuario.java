@@ -1,6 +1,6 @@
 package Entidades;
 
-abstract class Usuario {
+public abstract class Usuario {
     private String name;
     private String email;
     private String password;
