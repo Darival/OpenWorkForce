@@ -1,3 +1,3 @@
-class Cliente extends Usuario{
+public class Empleado extends Usuario{
     
 }
