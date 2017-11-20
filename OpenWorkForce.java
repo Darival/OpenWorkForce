@@ -4,11 +4,11 @@ import Entidades.*;
 class OpenWorkForce {
 
     public static void main(String[] args){
-        Contratos.test();
+
     }
 
     private static void bienvenida(){
-
+        
     }
 
     private static void iniciarSession(String email, String password){

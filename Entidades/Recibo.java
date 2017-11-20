@@ -1,3 +1,5 @@
+package Entidades;
+
 class Recibo {
 
 }
