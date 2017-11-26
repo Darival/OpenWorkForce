@@ -1,57 +1,59 @@
 import Controladores.*;
 import Entidades.*;
-import java.util.Scanner;
+import java.io.*;
+
+
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.ObjectOutputStream;
 
 class OpenWorkForce {
     public static void main(String[] args){
         Usuario user = bienvenida();
+        
+        System.out.println(user.toString());
     }
 
     private static Usuario bienvenida(){
         Usuario user = null;
         System.out.println("Bienvenido a OpenWorkforce");
         do {
-            Scanner sc = new Scanner(System.in);
+            Console cons = System.console();
             System.out.println("Login[L] \t Register[R]");
-            String option = sc.next().toUpperCase();
-            sc.close();
-            /* if(option == "L"){
+            String option = cons.readLine().toUpperCase();
+            if(option.equals("L")){
                 user = login();
-            } */
-            if(option == "R"){
+            }
+            if(option.equals("R")){
                 user = registroDeUsuario();
             }
         } while (user == null);
         return user;
     }
 
-    private static Usuario authUser(String email, String password){
-        return new Cliente("test","test", "test");
-    }
-
     private static Usuario registroDeUsuario(){
-        Scanner sc = new Scanner(System.in);
+        Console cons = System.console();
         System.out.println("Nombre:");
-        String name = sc.next();
+        String name = cons.readLine();
         System.out.println("Correo:");
-        String email = sc.next().toLowerCase();
-        System.out.println("Contraseña:");
-        String password = sc.next();
-        sc.close();
-        return new Cliente(name, email, password);
+        String email = cons.readLine().toLowerCase();
+        String password = new String(cons.readPassword("Contraseña:"));
+        Cliente cliente = new Cliente(name, email, password);
+        if(!cliente.create(cliente)){
+            return null;
+        };
+        return cliente;
     }
 
     private static void cerrarSession(){
 
     }
 
-    /* private static void login(){
-        Scanner sc = new Scanner(System.in);
+    private static Usuario login(){
+        Console cons = System.console();
         System.out.println("Correo:");
-        String email = sc.next().toLowerCase();
-        System.out.println("Contraseña:");
-        String password = sc.next();
-        sc = close();
-        Usuario user = authUser(email, password);
-    } */
+        String email = cons.readLine().toLowerCase();
+        String password = new String(cons.readPassword("Contraseña:"));
+        return Usuario.authUser(email, password);
+    }
 }
