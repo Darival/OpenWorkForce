@@ -43,7 +43,7 @@ public abstract class Usuario implements Serializable {
         file = new File("./datos/usuarios/" + email + ".ser");
         
         if(!file.exists()){
-            return user;
+            return null;
         }
 
         try {
@@ -83,9 +83,7 @@ public abstract class Usuario implements Serializable {
         try {
             file = new File("./datos/usuarios/" + user.getEmail() + ".ser");
 
-            if (file.createNewFile()){
-                System.out.println("Usuario creado!");
-            }else{
+            if (!file.createNewFile()){
                 System.out.println("Este correo electronico ya esta registrado.");
                 return false;
             }

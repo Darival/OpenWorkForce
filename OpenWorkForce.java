@@ -1,15 +1,17 @@
-import Controladores.*;
 import Entidades.*;
-import java.io.*;
-
-
-//import java.io.FileOutputStream;
-//import java.io.IOException;
-//import java.io.ObjectOutputStream;
+import java.io.File;
+import java.io.Console;
 
 class OpenWorkForce {
     public static void main(String[] args){
         Usuario user = bienvenida();
+        do{
+            System.out.println("Bienvenido " + user.getName());
+            System.out.println("Lista de Contratos");
+            Contrato.list(user);
+            System.out.println("Crear[C] \t Detalles[V]");
+
+        } while (user != null);
         
         System.out.println(user.toString());
     }
@@ -46,6 +48,7 @@ class OpenWorkForce {
     }
 
     private static void cerrarSession(){
+        
 
     }
 
