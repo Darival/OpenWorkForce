@@ -4,20 +4,29 @@ import java.io.Console;
 
 class OpenWorkForce {
     public static void main(String[] args){
-        Usuario user = bienvenida();
-        do{
-            System.out.println("Bienvenido " + user.getName());
-            System.out.println("Lista de Contratos");
-            Contrato.list(user);
-            System.out.println("Crear[C] \t Detalles[V]");
+        Cliente user = bienvenida();
 
-        } while (user != null);
-        
-        System.out.println(user.toString());
+        System.out.println("Bienvenido " + user.getName());
+
+        Servicio servicio = new Servicio("Costureria");
+        servicio.create();
+
+
+        System.out.println("Contratos Creados: ");
+
+        System.out.println(Contrato.all().size());
+
+        Contrato contrato = new Contrato(user, servicio.getKey(), "y asi", 200.0);
+
+        contrato.create();
+
+        System.out.println(contrato.getServicio().nombre);
+
+        System.out.println(contrato.cliente().getName());
     }
 
-    private static Usuario bienvenida(){
-        Usuario user = null;
+    private static Cliente bienvenida(){
+        Cliente user = null;
         System.out.println("Bienvenido a OpenWorkforce");
         do {
             Console cons = System.console();
@@ -33,30 +42,30 @@ class OpenWorkForce {
         return user;
     }
 
-    private static Usuario registroDeUsuario(){
+    private static Cliente registroDeUsuario(){
         Console cons = System.console();
+
         System.out.println("Nombre:");
         String name = cons.readLine();
-        System.out.println("Correo:");
-        String email = cons.readLine().toLowerCase();
+        String email;
+        do{
+            System.out.println("Correo:");
+            email = cons.readLine().toLowerCase();
+        }while(new File("./datos/usuarios/" + email + ".ser").exists());
+
         String password = new String(cons.readPassword("Contraseña:"));
         Cliente cliente = new Cliente(name, email, password);
-        if(!cliente.create(cliente)){
-            return null;
-        };
+
+        cliente.create();
+
         return cliente;
     }
 
-    private static void cerrarSession(){
-        
-
-    }
-
-    private static Usuario login(){
+    private static Cliente login(){
         Console cons = System.console();
         System.out.println("Correo:");
         String email = cons.readLine().toLowerCase();
         String password = new String(cons.readPassword("Contraseña:"));
-        return Usuario.authUser(email, password);
+        return (Cliente) Cliente.authUser(email, password);
     }
 }

@@ -1,10 +1,15 @@
 package Entidades;
 import java.io.*;
+import java.util.ArrayList;
 
-public abstract class Usuario implements Serializable {
+import Entidades.Contrato;
+
+public abstract class Usuario extends Entidad implements Serializable {
     private String name;
     private String email;
     private String password;
+
+    private static String database = "./datos/usuarios/";
     
     public void setName(String name){
         this.name = name;
@@ -40,9 +45,11 @@ public abstract class Usuario implements Serializable {
         File file = null;
         Usuario user = null;
         
-        file = new File("./datos/usuarios/" + email + ".ser");
+        file = new File(database + email + ".ser");
         
         if(!file.exists()){
+            System.out.println("Datos Incorrectos.");
+            System.out.println(database + email + ".ser");
             return null;
         }
 
@@ -74,52 +81,27 @@ public abstract class Usuario implements Serializable {
         return user;
     }
 
-    public static boolean create(Usuario user){
-        FileOutputStream fout = null;
-        ObjectOutputStream oos = null;
-
-        File file = null;
-        
-        try {
-            file = new File("./datos/usuarios/" + user.getEmail() + ".ser");
-
-            if (!file.createNewFile()){
-                System.out.println("Este correo electronico ya esta registrado.");
-                return false;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            fout = new FileOutputStream(file);
-            oos = new ObjectOutputStream(fout);
-            oos.writeObject(user);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            if (fout != null) {
-                try {
-                    fout.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return true;
+    public boolean create()
+    {
+        return super.create(database + getEmail());
     }
 
-    public Usuario read(){ return this;};
+    public ArrayList<Contrato> contratos(){
+        List<Contrato> list = Contrato.all().stream()
+            .filter(contrato -> !contrato.usuario.email.equals(email))
+            .collect(Collectors.toList());
+        return ArrayList<Contrato>(list);
+    };
+
+    public String getKey()
+    {
+        return getEmail();
+    };
+
+    public static Usuario read(String query)
+    {
+        return (Usuario) fetch(database + query);
+    };
     public Usuario update(){ return this;};
     public boolean delete(){return false;};
 }
