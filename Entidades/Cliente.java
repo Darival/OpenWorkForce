@@ -11,8 +11,4 @@ public class Cliente extends Usuario
         setEmail(email);
         setPassword(password);
     }
-
-    public ArrayList<Contrato> contratos(){
-        return Contrato.all();
-    };
 }

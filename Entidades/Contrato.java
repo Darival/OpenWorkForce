@@ -19,7 +19,8 @@ public class Contrato extends Entidad implements Serializable{
     private double compensacion;
     private static String database = "./datos/contratos/";
 
-    public Contrato(Cliente cliente,String servicio, String descripcion, double compensacion){
+    public Contrato(Cliente cliente,String servicio, String descripcion, double compensacion)
+    {
         setCliente(cliente);
         setServicio(servicio);
         setDescripcion(descripcion);

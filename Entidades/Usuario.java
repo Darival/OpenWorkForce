@@ -1,8 +1,8 @@
 package Entidades;
 import java.io.*;
 import java.util.ArrayList;
-
-import Entidades.Contrato;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Usuario extends Entidad implements Serializable {
     private String name;
@@ -88,6 +88,11 @@ public abstract class Usuario extends Entidad implements Serializable {
     public String getKey()
     {
         return getEmail();
+    };
+
+    public ArrayList<Contrato> contratos(){
+        List<Contrato> listado = Contrato.all().stream().filter(contrato -> contrato.cliente().getEmail().equals(getEmail())).collect(Collectors.toList());
+        return new ArrayList<Contrato>(listado);
     };
 
     public static Usuario read(String query)
