@@ -106,10 +106,15 @@ class OpenWorkForce {
         System.out.println("Nombre:");
         String name = cons.readLine();
         String email;
+        boolean exists = false;
         do{
             System.out.println("Correo:");
             email = cons.readLine().toLowerCase();
-        }while(new File("./datos/usuarios/" + email + ".obj").exists());
+            exists = new File("./datos/usuarios/" + email + ".obj").exists();
+            if(exists){
+                System.out.println("Correo electronico ya registrado.");
+            }
+        }while(exists);
 
         String password = new String(cons.readPassword("Contraseña:"));
         Cliente cliente = new Cliente(name, email, password);
