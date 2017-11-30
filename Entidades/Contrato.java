@@ -100,9 +100,9 @@ public class Contrato extends Entidad implements Serializable{
 
     public String toString()
     {
-        return /* getServicio().nombre + "\n" +  */
+        return getServicio().nombre + "\n" +
         "Descripcion:\n" + getDescripcion() + "\n" +
-        "Estado:\t" + getEstado() + 
+        "Estado:\t" + getEstado() + "\t" +
         "Paga:\t$" + getCompensacion();
     }
 

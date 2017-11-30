@@ -46,9 +46,10 @@ class OpenWorkForce {
     }
 
     private static void listContratos(Cliente cliente){
-        System.out.println(cliente.contratos().size());
         for(Contrato contrato: cliente.contratos()){
+            System.out.println("__________________________________________");
             System.out.println(contrato);
+            System.out.println("__________________________________________");
         }
     }
 
