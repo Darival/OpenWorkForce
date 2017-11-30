@@ -5,15 +5,15 @@ import java.io.Console;
 
 class OpenWorkForce {
     public static void main(String[] args){
-        Cliente user = bienvenida();
+        Cliente user = bienvenida(); // muestra el login y el registro de usuario.
 
-        init();
+        init(); // inicializa los objetos que requiere la aplicacion para crear contratos
 
         ArrayList<Servicio> servicios = Servicio.all();
 
         System.out.println("Bienvenido " + user.getName());
 
-        while(user != null){
+        while(user != null){//muestra el menu
             System.out.println("[1] Ver mis Contratos");
             System.out.println("[2] Crear contrato");
             System.out.println("[3] Cerrar Session");
@@ -24,10 +24,10 @@ class OpenWorkForce {
     
     
             switch (option) {
-                case "1":
+                case "1"://muestra la lista de contratos creados por el usuario
                     listContratos(user);
                     break;
-                case "2":
+                case "2"://muestra el fomulario para crear un contrato abierto
                     System.out.println("Elije un tipo de Servicio:");
                     int i = 0;
                     for(Servicio servicio: servicios){
@@ -54,7 +54,7 @@ class OpenWorkForce {
                     Contrato contrato = new Contrato(user, servicio.nombre, descripcion, remuneracion);
                     contrato.create();
                     break;
-                case "3":
+                case "3"://cierra la sesion del usuario
                     user = null;
                     System.out.println("Adios.");
                     break;
