@@ -1,6 +1,8 @@
 package Entidades;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cliente extends Usuario
 {
@@ -9,4 +11,8 @@ public class Cliente extends Usuario
         setEmail(email);
         setPassword(password);
     }
+
+    public ArrayList<Contrato> contratos(){
+        return Contrato.all();
+    };
 }

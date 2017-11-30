@@ -14,8 +14,8 @@ public class Contrato extends Entidad implements Serializable{
     private String cliente;
     private String empleado;
     public String descripcion;
-    public String estado;
-    public int recibo;
+    private String estado;
+    public String recibo;
     private double compensacion;
     private static String database = "./datos/contratos/";
 
@@ -24,11 +24,32 @@ public class Contrato extends Entidad implements Serializable{
         setServicio(servicio);
         setDescripcion(descripcion);
         setCompensacion(compensacion);
+        setEmpleado(null);
+        setEstado("abierto");
+        recibo = null;
     }
 
+    public void setEmpleado(String empleado){
+        this.empleado = empleado;
+    }
+
+    public String getEmpleado(){
+        return empleado;
+    }
+    
     public void setCliente(Cliente cliente)
     {
         this.cliente = cliente.getEmail();
+    }
+        
+    public void setEstado(String estado)
+    {
+        this.estado = estado;
+    }
+        
+    public String getEstado()
+    {
+        return estado;
     }
 
     public void setCliente(String email)
@@ -51,20 +72,38 @@ public class Contrato extends Entidad implements Serializable{
         this.descripcion = descripcion;
     }
 
+    public String getDescripcion()
+    {
+        return descripcion;
+    }
+
     public void setCompensacion(double compensacion)
     {
         this.compensacion = compensacion;
+    }
+
+    public double getCompensacion()
+    {
+        return  compensacion;
     }
 
     public boolean create()
     {
         return super.create(database + getKey());
     }
-
+    
     public String getKey()
     {
         int id = new File(database).listFiles().length;
         return "contrato" + id;
+    }
+
+    public String toString()
+    {
+        return /* getServicio().nombre + "\n" +  */
+        "Descripcion:\n" + getDescripcion() + "\n" +
+        "Estado:\t" + getEstado() + 
+        "Paga:\t$" + getCompensacion();
     }
 
     public static ArrayList<Contrato> all(){

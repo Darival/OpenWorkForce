@@ -45,11 +45,10 @@ public abstract class Usuario extends Entidad implements Serializable {
         File file = null;
         Usuario user = null;
         
-        file = new File(database + email + ".ser");
+        file = new File(database + email + ".obj");
         
         if(!file.exists()){
             System.out.println("Datos Incorrectos.");
-            System.out.println(database + email + ".ser");
             return null;
         }
 
@@ -85,13 +84,6 @@ public abstract class Usuario extends Entidad implements Serializable {
     {
         return super.create(database + getEmail());
     }
-
-    public ArrayList<Contrato> contratos(){
-        List<Contrato> list = Contrato.all().stream()
-            .filter(contrato -> !contrato.usuario.email.equals(email))
-            .collect(Collectors.toList());
-        return ArrayList<Contrato>(list);
-    };
 
     public String getKey()
     {

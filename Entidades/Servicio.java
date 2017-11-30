@@ -1,6 +1,9 @@
 package Entidades;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Servicio extends Entidad implements Serializable{
     
@@ -15,11 +18,20 @@ public class Servicio extends Entidad implements Serializable{
         return nombre;
     }
 
+    public String toString(){
+        return nombre;
+    }
+
     public boolean create(){
         if(exists(database + nombre)){
             return false;
         }
         return super.create(database + nombre);
+    }
+
+    public static ArrayList<Servicio> all(){
+        List<Servicio> listado = list(database).stream().map(object -> (Servicio) object).collect(Collectors.toList());
+        return new ArrayList<Servicio>(listado);
     }
 
     public static Servicio read(String query)

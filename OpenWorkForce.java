@@ -1,28 +1,68 @@
 import Entidades.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.io.Console;
 
 class OpenWorkForce {
     public static void main(String[] args){
         Cliente user = bienvenida();
 
+        init();
+
+        ArrayList<Servicio> servicios = Servicio.all();
+
         System.out.println("Bienvenido " + user.getName());
 
-        Servicio servicio = new Servicio("Costureria");
-        servicio.create();
+        while(user != null){
+            System.out.println("Ver mis Contratos[1]");
+            System.out.println("Crear contrato[2]");
+            System.out.println("Cerrar Session[3]");
+    
+    
+            Console cons = System.console();
+            String option = cons.readLine().toUpperCase();
+    
+    
+            switch (option) {
+                case "1":
+                    listContratos(user);
+                    break;
+                case "2":
+                    //createContrato(user);
+                    System.out.println("crear contrato");
+                    Contrato contrato = new Contrato(user, "Albanileria", "y asi", 200.0);
+                    contrato.create();
+                    break;
+                case "3":
+                    user = null;
+                    System.out.println("Adios.");
+                    break;
+            }
+        }
+    }
 
 
-        System.out.println("Contratos Creados: ");
+    public static void showMenu(Cliente user){
+    }
 
-        System.out.println(Contrato.all().size());
+    private static void listContratos(Cliente cliente){
+        System.out.println(cliente.contratos().size());
+        for(Contrato contrato: cliente.contratos()){
+            System.out.println(contrato);
+        }
+    }
 
-        Contrato contrato = new Contrato(user, servicio.getKey(), "y asi", 200.0);
+    private static void init(){
+        String[] serviceNames = new String[]
+        {
+            "Albanileria",
+            "Costureria",
+            "Plomeria"
+        };
 
-        contrato.create();
-
-        System.out.println(contrato.getServicio().nombre);
-
-        System.out.println(contrato.cliente().getName());
+        for(String name: serviceNames){
+            (new Servicio(name)).create();
+        }
     }
 
     private static Cliente bienvenida(){
@@ -51,7 +91,7 @@ class OpenWorkForce {
         do{
             System.out.println("Correo:");
             email = cons.readLine().toLowerCase();
-        }while(new File("./datos/usuarios/" + email + ".ser").exists());
+        }while(new File("./datos/usuarios/" + email + ".obj").exists());
 
         String password = new String(cons.readPassword("Contraseña:"));
         Cliente cliente = new Cliente(name, email, password);

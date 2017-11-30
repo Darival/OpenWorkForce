@@ -8,13 +8,12 @@ abstract class Entidad implements Serializable {
         FileOutputStream fout = null;
         ObjectOutputStream oos = null;
 
-        File file = new File(filename + ".ser");
+        File file = new File(filename + ".obj");
 
         try {
             fout = new FileOutputStream(file);
             oos = new ObjectOutputStream(fout);
             oos.writeObject(this);
-
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -37,8 +36,9 @@ abstract class Entidad implements Serializable {
         return true;
     }
 
-    public static boolean exists(String query){
-        File file = new File(query + ".ser");
+    public static boolean exists(String query)
+    {
+        File file = new File(query + ".obj");
         return file.exists();
     }
 
@@ -48,14 +48,11 @@ abstract class Entidad implements Serializable {
 
         File[] files = new File(database)
             .listFiles(
-                (dir, name) -> name.toLowerCase().endsWith(".ser")
+                (dir, name) -> name.toLowerCase().endsWith(".obj")
             );
-            
-        FileInputStream fin = null;
-        ObjectInputStream ois = null;
 
         for(File file: files){
-            entidades.add(fetch(file.getPath()));
+            entidades.add((Entidad) fetch(file.getPath().replaceFirst("\\.obj", "")));
         }
 
         return entidades;
@@ -66,7 +63,7 @@ abstract class Entidad implements Serializable {
         Entidad entidad = null;
         FileInputStream fin = null;
         ObjectInputStream ois = null;
-        File file = new File(query + ".ser");
+        File file = new File(query + ".obj");
         if(file.exists()){
             try {
                 fin = new FileInputStream(file);
